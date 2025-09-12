@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaulty - Your AI Financial Advisor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hidden {
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(20px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-out {
+            animation: fadeInOut 3s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 min-h-screen font-sans flex flex-col">
+
+    <!-- Header -->
+    <header id="header" class="bg-black/80 backdrop-blur-sm sticky top-0 z-10 border-b border-blue-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div id="logo-button" class="flex items-center cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-transparent bg-clip-text bg-gradient-to-bl from-[#00298a] to-[#0091ff]"><path d="M4 20V10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M12 10v4"/><path d="M12 18v.01"/></svg>
+                    <h1 class="text-xl sm:text-2xl font-bold ml-2 tracking-tight">Vaulty</h1>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="hidden sm:inline text-sm font-medium text-gray-400">Plan:</span>
+                        <span id="header-plan-badge" class="px-3 py-1 text-xs sm:text-sm font-semibold rounded-full bg-gray-700 text-gray-200">
+                            Basic
+                        </span>
+                    </div>
+                    <button id="pricing-button" class="hidden sm:flex items-center border border-blue-500/50 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 hover:bg-blue-500/10 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 mr-2 text-transparent bg-clip-text bg-gradient-to-bl from-[#00298a] to-[#0091ff]"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 
+                        Upgrade
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 sm:p-6 md:p-8">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="animate-fade-in">
+                <div class="text-center mb-10 sm:mb-12">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">Welcome to Your <span class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">Financial Future</span></h2>
+                    <p class="mt-4 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">Select a feature to begin, or ask Vaulty a quick question below.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-10 sm:mb-12 max-w-3xl mx-auto">
+                    <div data-view="goals" class="dashboard-card p-0.5 bg-gradient-to-br from-[#00298a]/30 to-[#0091ff]/30 rounded-2xl transition-all duration-300 cursor-pointer group hover:from-[#00298a] hover:to-[#0091ff] hover:shadow-lg hover:shadow-blue-500/20">
+                        <div class="bg-black w-full h-full rounded-[15px] p-6 sm:p-8 flex flex-col items-center text-center">
+                            <div class="bg-gray-900/50 p-4 rounded-full border border-gray-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mt-5">Goals</h3>
+                            <p class="text-gray-400 text-sm mt-2 flex-grow">Set, track, and get AI analysis on your financial goals.</p>
+                            <div class="font-semibold mt-6 flex items-center opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">Start Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+                        </div>
+                    </div>
+                    <div data-view="businessBuilder" class="dashboard-card p-0.5 bg-gradient-to-br from-[#00298a]/30 to-[#0091ff]/30 rounded-2xl transition-all duration-300 cursor-pointer group hover:from-[#00298a] hover:to-[#0091ff] hover:shadow-lg hover:shadow-blue-500/20">
+                        <div class="bg-black w-full h-full rounded-[15px] p-6 sm:p-8 flex flex-col items-center text-center">
+                            <div class="bg-gray-900/50 p-4 rounded-full border border-gray-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mt-5">Business Builder</h3>
+                            <p class="text-gray-400 text-sm mt-2 flex-grow">Let Vaulty guide you in creating a comprehensive business plan.</p>
+                            <div class="font-semibold mt-6 flex items-center opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">Start Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-0.5 bg-gradient-to-br from-[#00298a]/30 to-[#0091ff]/30 rounded-2xl">
+                    <div class="bg-black w-full h-full rounded-[15px] p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-4">Have something else in mind?</h3>
+                        <p class="text-gray-400 text-sm sm:text-base mb-4">Describe your financial goal or question below to get a custom plan from Vaulty.</p>
+                        <form id="dashboard-query-form">
+                            <div class="flex flex-col sm:flex-row items-center bg-gray-900 rounded-lg p-2 border border-gray-700 focus-within:border-blue-500 gap-2">
+                                <input type="text" name="customQuery" placeholder="e.g., 'How can I save for a house down payment in 5 years?'" class="w-full bg-transparent text-white placeholder-gray-500 focus:outline-none px-3" />
+                                <button type="submit" class="w-full sm:w-auto bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white font-bold py-2 px-6 rounded-md hover:opacity-90 transition-opacity flex-shrink-0">Generate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advisor (Chat) View -->
+            <div id="advisor-view" class="hidden">
+                <!-- Content is dynamically generated -->
+            </div>
+
+            <!-- Goals View -->
+            <div id="goals-view" class="hidden">
+                 <!-- Content is dynamically generated -->
+            </div>
+
+             <!-- Business Builder View -->
+            <div id="business-builder-view" class="hidden">
+                 <!-- Content is dynamically generated -->
+            </div>
+
+            <!-- Pricing View -->
+            <div id="pricing-view" class="hidden">
+                <!-- Content is dynamically generated -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification-container" class="fixed bottom-5 right-5 z-50">
+         <!-- Notifications are dynamically added here -->
+    </div>
+
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentView: 'dashboard',
+            selectedPlan: 'Basic',
+            conversation: [],
+            isLoading: false,
+            error: null,
+            bbState: { // Business Builder State
+                step: 'intro', // intro, questioning, generating, result
+                currentQuestionIndex: 0,
+                answers: {},
+            }
+        };
+
+        // --- GLOBAL VARS ---
+        let typewriterIntervals = []; // To manage multiple intervals
+
+        const planFeatures = {
+            Basic: { name: 'Basic', price: '0', features: ['General financial tips', 'Limited AI analysis', 'Standard support'] },
+            Pro: { name: 'Pro', price: '14.99', features: ['Personalized financial plans', 'In-depth investment analysis', 'Priority support', 'Goal tracking'] },
+            Max: { name: 'Max', price: '99.99', features: ['Everything in Pro', 'Full AI intellectual capabilities', 'Custom wealth strategies', 'Market sentiment analysis', 'Dedicated AI mentor'] },
+        };
+        
+        // --- DOM ELEMENTS ---
+        const views = {
+            dashboard: document.getElementById('dashboard-view'),
+            advisor: document.getElementById('advisor-view'),
+            goals: document.getElementById('goals-view'),
+            businessBuilder: document.getElementById('business-builder-view'),
+            pricing: document.getElementById('pricing-view'),
+        };
+
+        const headerPlanBadge = document.getElementById('header-plan-badge');
+        const notificationContainer = document.getElementById('notification-container');
+        
+        // --- UTILS & HELPERS (DEFINED BEFORE USAGE) ---
+        function showNotification(message) {
+            const id = `notif-${Date.now()}`;
+            const notifElement = document.createElement('div');
+            notifElement.id = id;
+            notifElement.className = 'bg-gray-800 text-white py-2 px-4 rounded-lg shadow-lg flex items-center z-50 animate-fade-in-out';
+            notifElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2 text-blue-400"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span class="text-sm sm:text-base">${message}</span>
+            `;
+            notificationContainer.appendChild(notifElement);
+
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.remove();
+            }, 3000);
+        }
+
+        function clearTypewriters() {
+            typewriterIntervals.forEach(clearInterval);
+            typewriterIntervals = [];
+        }
+
+        function typewriter(element, text, speed, onComplete) {
+            let i = 0;
+            if(!element) return;
+            element.innerHTML = '';
+            const intervalId = setInterval(() => {
+                if (i >= text.length) {
+                    clearInterval(intervalId);
+                    if (onComplete) onComplete();
+                } else {
+                    i++;
+                    element.innerHTML = text.substring(0, i);
+                }
+            }, speed);
+            typewriterIntervals.push(intervalId);
+        }
+        
+        function simpleMarkdownRenderer(text) {
+             if (!text) return '';
+             return text
+                .replace(/^### (.*$)/gim, '<h3 class="text-lg sm:text-xl font-semibold mt-4 mb-2 text-white">$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em class="italic text-blue-300">$1</em>')
+                .replace(/(\r\n|\n|\r)/g, "<br />");
+        }
+
+        function planToString(planData) {
+            let text = `${planData.title}\n\n${planData.summary}\n\n`;
+            if (planData.actionableSteps) {
+                text += "Actionable Steps:\n";
+                planData.actionableSteps.forEach(step => {
+                    text += `- ${step.title}: ${step.description}\n`;
+                });
+                text += "\n";
+            }
+            if (planData.potentialRisks) {
+                text += "Potential Risks:\n";
+                planData.potentialRisks.forEach(risk => {
+                    text += `- ${risk.title}: ${risk.description}\n`;
+                });
+                text += "\n";
+            }
+            if (planData.longTermOutlook) {
+                text += `Long-Term Outlook: ${planData.longTermOutlook}\n\n`;
+            }
+            text += `Disclaimer: ${planData.disclaimer}`;
+            return text;
+        }
+
+        // --- HTML TEMPLATE GENERATORS ---
+        function getLoadingIndicatorHTML() { return `<div class="flex items-center justify-start"><div class="bg-gray-900/50 p-3 sm:p-4 rounded-2xl flex items-center space-x-3 border border-gray-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 animate-spin bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg><span class="text-gray-300 text-sm sm:text-base">Vaulty Thinking...</span></div></div>`; }
+        function getErrorMessageHTML(msg) { return `<div class="flex items-center justify-start"><div class="bg-red-900/50 p-3 sm:p-4 rounded-2xl flex items-center space-x-3 border border-red-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-red-400"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span class="text-red-300 text-sm sm:text-base">Error: ${msg}</span></div></div>`; }
+
+        function getBotActionsHTML(textToProcess) {
+            return `
+                <div class="mt-4 pt-2 border-t border-gray-800 flex items-center space-x-1 sm:space-x-2">
+                    <button data-action="copy" class="bot-action text-gray-500 hover:text-white p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+                    <button data-action="speak" class="bot-action text-gray-500 hover:text-white p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                    <div class="flex-grow"></div>
+                    <button data-action="feedback-positive" class="bot-action text-gray-500 hover:text-white p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M7 10v12"/><path d="M18 10V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v6H4V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6h-2Z"/><path d="M14 10h4v12h-4Z"/></svg></button>
+                    <button data-action="feedback-negative" class="bot-action text-gray-500 hover:text-white p-2 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M17 14V2"/><path d="M6 14V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6h2V8a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v6h2Z"/><path d="M10 14H6V2h4Z"/></svg></button>
+                     <textarea class="hidden">${textToProcess}</textarea>
+                </div>`;
+        }
+
+        function getUserMessageHTML(content) {
+            return `
+                <div class="flex justify-end">
+                    <div class="bg-gradient-to-br from-[#00298a] to-[#0091ff] p-3 sm:p-4 rounded-2xl max-w-[80%] sm:max-w-2xl flex items-start space-x-3 shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-white flex-shrink-0 mt-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <p class="text-white whitespace-pre-wrap text-sm sm:text-base">${content}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getBotChatMessageHTML(content) {
+             return `
+                <div class="flex justify-start">
+                     <div class="bg-gray-900/50 p-3 sm:p-4 rounded-2xl max-w-[80%] sm:max-w-2xl flex flex-col border border-gray-800">
+                        <div class="flex items-start space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent flex-shrink-0 mt-1"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                            <div class="text-gray-300 flex-1 text-sm sm:text-base">
+                                ${simpleMarkdownRenderer(content)}
+                            </div>
+                        </div>
+                        ${getBotActionsHTML(content)}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getBotPlanMessageHTML(data) {
+             const textVersion = planToString(data);
+             let actionableStepsHTML = '';
+             if (data.actionableSteps && data.actionableSteps.length > 0) {
+                 data.actionableSteps.forEach(step => {
+                     actionableStepsHTML += `
+                        <div class="bg-black/50 p-3 sm:p-4 rounded-lg flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-400 mr-3 mt-1 flex-shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div>
+                                <h4 class="font-bold text-sm sm:text-base">${step.title}</h4>
+                                <div class="text-gray-400 text-sm">${simpleMarkdownRenderer(step.description)}</div>
+                            </div>
+                        </div>`;
+                 });
+             }
+             // Similar loops for risks, etc.
+             
+             return `
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 sm:p-6 animate-slide-up">
+                    <div class="flex items-center mb-4">
+                        <span class="p-2 bg-gray-900 rounded-full mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">${data.title}</h2>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="text-gray-300 text-base sm:text-lg leading-relaxed">${simpleMarkdownRenderer(data.summary)}</div>
+                        ${actionableStepsHTML ? `<div><h3 class="text-lg sm:text-xl font-semibold mb-3 bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent inline-block">Actionable Steps</h3><div class="space-y-3">${actionableStepsHTML}</div></div>` : ''}
+                        <div class="mt-6 text-xs sm:text-sm text-gray-500 border-t border-gray-800 pt-4">
+                            <p><strong>Disclaimer:</strong> ${data.disclaimer}</p>
+                        </div>
+                    </div>
+                    ${getBotActionsHTML(textVersion)}
+                </div>
+            `;
+        }
+
+        // --- EVENT ATTACHMENT ---
+        function attachBotActionListeners() {
+            document.querySelectorAll('.bot-action').forEach(button => {
+                const newButton = button.cloneNode(true);
+                button.parentNode.replaceChild(newButton, button);
+                
+                newButton.addEventListener('click', (e) => {
+                    const action = e.currentTarget.dataset.action;
+                    const text = e.currentTarget.parentElement.querySelector('textarea').value;
+                    
+                    if (action === 'copy') {
+                        navigator.clipboard.writeText(text);
+                        showNotification("Copied to clipboard!");
+                    } else if (action === 'speak') {
+                       // TTS logic - placeholder
+                    } else if (action.startsWith('feedback')) {
+                        const type = action.split('-')[1];
+                        e.currentTarget.querySelector('svg').classList.add('text-blue-500');
+                        e.currentTarget.parentElement.querySelectorAll('button[data-action^="feedback"]').forEach(btn => btn.disabled = true);
+                        showNotification("Thanks for your feedback!");
+                    }
+                });
+            });
+        }
+        
+        // --- NAVIGATION & MAIN RENDER LOGIC ---
+        function handleNavigate(view) {
+            state.currentView = view;
+            state.conversation = [];
+            window.scrollTo(0, 0); 
+            state.bbState = { step: 'intro', currentQuestionIndex: 0, answers: {} };
+            clearTypewriters();
+            render();
+        }
+
+        async function handleGenerateResponse(prompt, responseType = 'chat', isBusinessPlan = false) {
+             if (!prompt) return;
+
+            state.isLoading = true;
+            state.error = null;
+            const userMessage = { type: 'user', content: prompt };
+
+            if (isBusinessPlan) {
+                state.conversation = [];
+            } else {
+                state.conversation.push(userMessage);
+            }
+            render();
+
+            const apiKey = "AIzaSyAVsgP4wvcrkhZchKlv3-5WJEqGW_i-fmU"; // <--- ADD YOUR API KEY BETWEEN THE QUOTES
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            let systemPrompt;
+            let payload;
+
+            if (responseType === 'chat') {
+                systemPrompt = `You are "Vaulty AI," a friendly and conversational AI financial assistant. Your goal is to provide helpful and clear answers to financial questions. Use Markdown for formatting, including **bold**, *italic*, and ### headers to structure your response nicely. Keep the tone encouraging and professional. The user is on the "${state.selectedPlan}" plan, so tailor the depth and detail of your response accordingly. You are not a licensed financial advisor, so always include a brief disclaimer if you are providing financial advice.`;
+                payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+            } else { // 'plan'
+                systemPrompt = isBusinessPlan 
+                    ? `You are "Vaulty AI," a world-class AI business strategy consultant. Your goal is to provide a comprehensive and actionable business plan based on the user's answers. Structure the plan with sections for Concept, Budget Allocation, Target Audience, Marketing, and Next Steps. The user is on the "${state.selectedPlan}" plan. Tailor the depth of your response accordingly. Use Markdown for formatting, including **bold**, *italic*, and ### headers. DO NOT use markdown lists (like - or *), use standard newlines instead. ALWAYS include a disclaimer that this is a conceptual plan and professional consultation is advised.`
+                    : `You are "Vaulty AI," a world-class AI financial advisor. Your goal is to provide structured, actionable, and insightful financial plans. You are NOT a licensed financial advisor. ALWAYS include a clear disclaimer that your advice is for informational purposes only and users should consult a professional. Based on the user's request, generate a detailed financial strategy. Use Markdown for formatting, including **bold**, *italic*, and ### headers. DO NOT use markdown lists (like - or *), use standard newlines instead. Adhere strictly to the JSON schema provided. The user is on the "${state.selectedPlan}" plan. Tailor the depth of your response accordingly.`;
+                payload = { 
+                    contents: [{ role: "user", parts: [{ text: prompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: { title: { type: "STRING" }, summary: { type: "STRING" }, actionableSteps: { type: "ARRAY", items: { type: "OBJECT", properties: { title: { type: "STRING" }, description: { type: "STRING" } } } }, potentialRisks: { type: "ARRAY", items: { type: "OBJECT", properties: { title: { type: "STRING" }, description: { type: "STRING" } } } }, longTermOutlook: { type: "STRING" }, disclaimer: { type: "STRING" } },
+                            required: ["title", "summary", "actionableSteps", "disclaimer"]
+                        }
+                    }
+                };
+            }
+
+            try {
+                if (!apiKey) throw new Error("API key is missing. Please add it to the code.");
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!response.ok) throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+                const responseText = candidate?.content?.parts?.[0]?.text;
+
+                let botMessage;
+                if (responseType === 'chat') {
+                    botMessage = { type: 'bot', format: 'chat', content: responseText || "I'm sorry, I can only assist with questions related to finance, money, investing, or business." };
+                } else {
+                    const parsedJson = JSON.parse(responseText || '{}');
+                    if (Object.keys(parsedJson).length === 0) throw new Error("Failed to generate a valid plan.");
+                    botMessage = { type: 'bot', format: 'plan', content: parsedJson };
+                }
+                state.conversation.push(botMessage);
+
+            } catch (e) {
+                console.error(e);
+                state.error = e.message;
+                const errorMessage = { type: 'bot', format: 'chat', content: `Sorry, an error occurred: ${e.message}` };
+                state.conversation.push(errorMessage);
+            } finally {
+                state.isLoading = false;
+                if (isBusinessPlan) {
+                    state.bbState.step = 'result';
+                }
+                render();
+            }
+        }
+
+        // --- VIEW RENDERERS ---
+        function renderAdvisorView() {
+            views.advisor.innerHTML = `
+                <div class="animate-fade-in flex flex-col h-[calc(100vh-10rem)] sm:h-[calc(100vh-12rem)] relative">
+                    <div id="chat-container" class="flex-grow space-y-6 sm:space-y-8 overflow-y-auto pr-2 sm:pr-4 pb-28">
+                        <button id="advisor-back-button" class="font-semibold flex items-center text-blue-300 hover:text-blue-200 flex-shrink-0 sticky top-0 bg-black/80 backdrop-blur-sm py-2 z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 transform rotate-180"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            Back to Dashboard
+                        </button>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-2 sm:p-4 border-t border-blue-500/20">
+                        <div class="max-w-4xl mx-auto">
+                            <form id="advisor-form">
+                                <div class="flex items-center bg-gray-900 rounded-lg p-2 border border-gray-800 focus-within:border-blue-500 shadow-lg">
+                                    <input type="text" id="advisor-input" placeholder="Ask a follow-up question..." class="w-full bg-transparent text-white placeholder-gray-500 focus:outline-none px-3 py-2" ${state.isLoading ? 'disabled' : ''} />
+                                    <button type="submit" id="advisor-submit" class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white font-bold py-2 px-4 sm:px-6 rounded-md hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed" ${state.isLoading ? 'disabled' : ''}>
+                                      ${state.isLoading ? '...' : 'Send'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const chatContainer = document.getElementById('chat-container');
+            state.conversation.forEach(msg => {
+                const msgElement = document.createElement('div');
+                if (msg.type === 'user') {
+                    msgElement.innerHTML = getUserMessageHTML(msg.content);
+                } else if (msg.format === 'chat') {
+                     msgElement.innerHTML = getBotChatMessageHTML(msg.content);
+                } else if (msg.format === 'plan') {
+                     msgElement.innerHTML = getBotPlanMessageHTML(msg.content);
+                }
+                chatContainer.appendChild(msgElement);
+            });
+            
+            if (state.isLoading) chatContainer.innerHTML += getLoadingIndicatorHTML();
+            if (state.error) chatContainer.innerHTML += getErrorMessageHTML(state.error);
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            document.getElementById('advisor-back-button').addEventListener('click', () => handleNavigate('dashboard'));
+            document.getElementById('advisor-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('advisor-input');
+                if (input.value.trim()){
+                    handleGenerateResponse(input.value, 'chat');
+                    input.value = '';
+                }
+            });
+            attachBotActionListeners();
+        }
+
+        function renderGoalsView() {
+            const goalsData = [ { id: 1, name: 'Buy a Dream Car', amount: 50000, saved: 12000 }, { id: 2, name: 'House Down Payment', amount: 100000, saved: 25000 } ];
+            
+            let goalsHTML = '';
+            goalsData.forEach(goal => {
+                const progress = (goal.saved / goal.amount) * 100;
+                const remaining = goal.amount - goal.saved;
+                const prompt = `Create a plan to help me save the remaining $${remaining.toLocaleString()} for my goal: '${goal.name}'. I've already saved $${goal.saved.toLocaleString()}.`;
+
+                goalsHTML += `
+                    <div class="bg-gray-900/50 p-4 sm:p-6 rounded-2xl border border-gray-800">
+                        <div class="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-bold">${goal.name}</h3>
+                                <p class="text-sm text-gray-400">Target: $${goal.amount.toLocaleString()} | Saved: $${goal.saved.toLocaleString()}</p>
+                            </div>
+                            <button data-prompt="${prompt}" class="analyze-goal-button border border-blue-500/50 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-500/10 transition-colors w-full sm:w-auto">
+                                Analyze with AI
+                            </button>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 mt-4">
+                            <div class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] h-2.5 rounded-full" style="width: ${progress}%"></div>
+                        </div>
+                        <p class="text-right text-sm text-gray-400 mt-1">${Math.round(progress)}% Complete</p>
+                    </div>
+                `;
+            });
+
+            views.goals.innerHTML = `
+                <div class="animate-fade-in">
+                    <button id="goals-back-button" class="mb-6 font-semibold flex items-center text-blue-300 hover:text-blue-200">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 transform rotate-180"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg> Back to Dashboard
+                    </button>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <h2 class="text-2xl sm:text-3xl font-bold">Your Financial Goals</h2>
+                        <button class="flex items-center bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white font-bold py-2 px-4 rounded-lg transition-colors hover:opacity-90 w-full sm:w-auto">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Add New Goal
+                        </button>
+                    </div>
+                    <div class="space-y-4">${goalsHTML}</div>
+                </div>
+            `;
+            document.getElementById('goals-back-button').addEventListener('click', () => handleNavigate('dashboard'));
+            document.querySelectorAll('.analyze-goal-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const prompt = button.dataset.prompt;
+                    handleNavigate('advisor');
+                    setTimeout(() => handleGenerateResponse(prompt, 'plan'), 10);
+                });
+            });
+        }
+        
+        function renderBusinessBuilderView() {
+            let contentHTML = '';
+            const { step, currentQuestionIndex } = state.bbState;
+
+            const questions = [
+                "What is the core idea or concept of your business?",
+                "What is your estimated starting budget? (e.g., $5,000, $50,000)",
+                "Who is your target audience or ideal customer?",
+                "What makes your business unique compared to competitors?"
+            ];
+
+            switch(step) {
+                case 'intro':
+                    contentHTML = `
+                        <div class="text-center p-4 sm:p-8">
+                            <p id="bb-intro-text" class="text-xl sm:text-2xl md:text-3xl font-semibold min-h-[84px]"></p>
+                            <button id="bb-start-button" class="hidden mt-8 bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-lg text-lg sm:text-xl animate-fade-in">
+                                Let's Start
+                            </button>
+                        </div>
+                    `;
+                    break;
+                case 'questioning':
+                    contentHTML = `
+                         <div class="p-4 sm:p-8 text-center">
+                            <div class="mb-8">
+                                <span class="font-semibold bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">Question ${currentQuestionIndex + 1} of ${questions.length}</span>
+                                <p id="bb-question-text" class="text-2xl sm:text-3xl md:text-4xl mt-4 min-h-[100px] font-semibold"></p>
+                            </div>
+                            <form id="bb-answer-form" class="hidden animate-fade-in">
+                                <div class="flex items-center bg-gray-900 rounded-lg p-2 border border-gray-700 focus-within:border-blue-500 max-w-2xl mx-auto">
+                                    <input name="answer" type="text" placeholder="Type your answer here..." class="w-full bg-transparent text-white placeholder-gray-500 focus:outline-none px-3 py-2" required />
+                                    <button type="submit" class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white font-bold py-2 px-6 rounded-md hover:opacity-90 transition-opacity">
+                                        Send <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 inline-block ml-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    `;
+                    break;
+                case 'generating':
+                    contentHTML = `
+                        <div class="text-center p-10 sm:p-16 animate-pulse">
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">
+                                Vaulty is generating your plan!
+                            </h2>
+                        </div>`;
+                    break;
+                case 'result':
+                    const plan = state.conversation[0]?.content;
+                    contentHTML = plan ? getBotPlanMessageHTML(plan) : getErrorMessageHTML('Failed to load the business plan.');
+                    break;
+            }
+
+            views.businessBuilder.innerHTML = `
+                 <div class="animate-fade-in max-w-4xl mx-auto">
+                    <button id="bb-back-button" class="mb-6 font-semibold flex items-center text-blue-300 hover:text-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 transform rotate-180"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg> Back to Dashboard
+                    </button>
+                    <div id="bb-content">${contentHTML}</div>
+                </div>
+            `;
+
+            document.getElementById('bb-back-button').addEventListener('click', () => handleNavigate('dashboard'));
+            
+            if (step === 'intro') {
+                const introTextEl = document.getElementById('bb-intro-text');
+                const startBtn = document.getElementById('bb-start-button');
+                typewriter(introTextEl, "Welcome! I'm your Business Builder! Do you want to start our experience?", 30, () => {
+                    startBtn.classList.remove('hidden');
+                });
+                startBtn.addEventListener('click', () => {
+                    state.bbState.step = 'questioning';
+                    render();
+                });
+            } else if (step === 'questioning') {
+                const questionTextEl = document.getElementById('bb-question-text');
+                const answerForm = document.getElementById('bb-answer-form');
+                typewriter(questionTextEl, questions[currentQuestionIndex], 30, () => {
+                    answerForm.classList.remove('hidden');
+                    answerForm.querySelector('input').focus();
+                });
+                answerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    state.bbState.answers[currentQuestionIndex] = e.target.elements.answer.value;
+                    if (currentQuestionIndex < questions.length - 1) {
+                        state.bbState.currentQuestionIndex++;
+                        render();
+                    } else {
+                        state.bbState.step = 'generating';
+                        const finalPrompt = `Create a business plan with these details:\n- Concept: ${state.bbState.answers[0]}\n- Budget: ${state.bbState.answers[1]}\n- Target Audience: ${state.bbState.answers[2]}\n- Uniqueness: ${state.bbState.answers[3]}`; 
+                        handleGenerateResponse(finalPrompt, 'plan', true);
+                    }
+                });
+            } else if (step === 'result') {
+                 attachBotActionListeners();
+            }
+        }
+
+        function renderPricingView() {
+            views.pricing.innerHTML = `
+                <div class="animate-fade-in">
+                    <button id="pricing-back-button" class="mb-6 font-semibold flex items-center text-blue-300 hover:text-blue-200">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2 transform rotate-180"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg> Back to Dashboard
+                    </button>
+                     <div class="text-center mb-10 sm:mb-12">
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">Find the Perfect Plan for <span class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] bg-clip-text text-transparent">Vaulty</span></h2>
+                        <p class="mt-4 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">Unlock your financial potential with the right set of tools.</p>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+                    </div>
+                </div>
+            `;
+            const pricingContainer = views.pricing.querySelector('.grid');
+            Object.values(planFeatures).forEach(plan => {
+                const isCurrent = state.selectedPlan === plan.name;
+                const isFeatured = plan.name === 'Max';
+                const featuresHTML = plan.features.map(f => `<li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-400 mr-3 mt-1 flex-shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>${f}</span></li>`).join('');
+                const card = document.createElement('div');
+                card.className = `border rounded-2xl p-6 sm:p-8 flex flex-col ${isCurrent ? 'border-blue-500' : 'border-gray-800'} ${isFeatured ? 'bg-gray-900/80' : 'bg-gray-900/50'}`;
+                card.innerHTML = `
+                    ${isFeatured ? `<div class="text-center mb-4"><span class="bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white text-xs font-bold px-3 py-1 rounded-full">MOST POWERFUL</span></div>` : ''}
+                    <h3 class="text-xl sm:text-2xl font-bold text-center">${plan.name}</h3>
+                    <div class="text-center mt-4">
+                        <span class="text-4xl sm:text-5xl font-extrabold">$${plan.price}</span>
+                        <span class="text-gray-400">/month</span>
+                    </div>
+                    <ul class="mt-8 space-y-4 text-gray-300 flex-grow text-sm sm:text-base">${featuresHTML}</ul>
+                    <button data-plan="${plan.name}" class="select-plan-button w-full mt-8 py-3 px-6 font-bold rounded-lg transition-colors ${ isCurrent ? 'bg-gray-700 text-gray-400 cursor-not-allowed' : 'bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white hover:opacity-90' }" ${isCurrent ? 'disabled' : ''}>
+                        ${isCurrent ? 'Current Plan' : 'Select Plan'}
+                    </button>
+                `;
+                pricingContainer.appendChild(card);
+            });
+            document.getElementById('pricing-back-button').addEventListener('click', () => handleNavigate('dashboard'));
+            document.querySelectorAll('.select-plan-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.selectedPlan = btn.dataset.plan;
+                    handleNavigate('dashboard');
+                });
+            });
+        }
+
+        function render() {
+            Object.values(views).forEach(v => v.classList.add('hidden'));
+            if (views[state.currentView]) {
+                views[state.currentView].classList.remove('hidden');
+            }
+
+            headerPlanBadge.textContent = state.selectedPlan;
+            headerPlanBadge.className = `px-3 py-1 text-xs sm:text-sm font-semibold rounded-full ${state.selectedPlan === 'Max' || state.selectedPlan === 'Pro' ? 'bg-gradient-to-bl from-[#00298a] to-[#0091ff] text-white' : 'bg-gray-700 text-gray-200'}`;
+
+            switch (state.currentView) {
+                case 'advisor': renderAdvisorView(); break;
+                case 'goals': renderGoalsView(); break;
+                case 'businessBuilder': renderBusinessBuilderView(); break;
+                case 'pricing': renderPricingView(); break;
+            }
+        }
+        
+        // --- INITIALIZATION ---
+        function init() {
+            document.querySelectorAll('.dashboard-card').forEach(card => {
+                card.addEventListener('click', () => handleNavigate(card.dataset.view));
+            });
+            document.getElementById('dashboard-query-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = e.target.elements.customQuery.value;
+                if(query) {
+                    handleNavigate('advisor');
+                    setTimeout(() => handleGenerateResponse(query, 'chat'), 10);
+                }
+            });
+            document.getElementById('logo-button').addEventListener('click', () => handleNavigate('dashboard'));
+            document.getElementById('pricing-button').addEventListener('click', () => handleNavigate('pricing'));
+            render();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
